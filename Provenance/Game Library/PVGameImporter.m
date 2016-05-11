@@ -444,7 +444,8 @@
     
     if (![results count])
     {
-        NSString *fileName = [[game romPath] lastPathComponent];
+        NSString *fileExtension = [[game romPath] pathExtension];
+        NSString *fileName = [[[game romPath] lastPathComponent] stringByDeletingPathExtension];
         
         // Remove any extraneous stuff in the rom name such as (U), (J), [T+Eng] etc
         static NSMutableCharacterSet *charSet = nil;
@@ -462,6 +463,7 @@
             gameTitleLen = [fileName length];
         }
         fileName = [fileName substringToIndex:gameTitleLen];
+        fileName = [[fileName stringByAppendingString:@"%."] stringByAppendingString:fileExtension];
         results = [self searchDatabaseUsingKey:@"romFileName"
                                          value:fileName
                                       systemID:[game systemIdentifier]
