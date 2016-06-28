@@ -138,6 +138,10 @@ void uncaughtExceptionHandler(NSException *exception)
                                              selector:@selector(screenDidDisconnect:)
                                                  name:UIScreenDidDisconnectNotification
                                                object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(handleControllerManagerControllerReassigned:)
+												 name:PVControllerManagerControllerReassignedNotification
+											   object:nil];
 
 	self.emulatorCore = [[PVEmulatorConfiguration sharedInstance] emulatorCoreForSystemIdentifier:[self.game systemIdentifier]];
     [self.emulatorCore setSaveStatesPath:[self saveStatePath]];
@@ -646,13 +650,20 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)showSpeedMenu
 {
-	__block PVEmulatorViewController *weakSelf = self;
-
-	UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Game Speed"
-																		 message:nil
-																  preferredStyle:UIAlertControllerStyleActionSheet];
-	NSArray<NSString *> *speeds = @[@"Slow", @"Normal", @"Fast"];
-	[speeds enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    __block PVEmulatorViewController *weakSelf = self;
+    
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Game Speed"
+                                                                         message:nil
+                                                                  preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    if (self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        [[actionSheet popoverPresentationController] setSourceView:self.menuButton];
+        [[actionSheet popoverPresentationController] setSourceRect:[self.menuButton bounds]];
+    }
+    
+    NSArray<NSString *> *speeds = @[@"Slow", @"Normal", @"Fast"];
+    [speeds enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		[actionSheet addAction:[UIAlertAction actionWithTitle:obj style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 			weakSelf.emulatorCore.gameSpeed = idx;
 			[weakSelf.emulatorCore setPauseEmulation:NO];
@@ -715,6 +726,12 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)controllerDidDisconnect:(NSNotification *)note
 {
 	[self.menuButton setHidden:NO];
+}
+
+- (void)handleControllerManagerControllerReassigned:(NSNotification *)notification
+{
+	self.emulatorCore.controller1 = [[PVControllerManager sharedManager] player1];
+	self.emulatorCore.controller2 = [[PVControllerManager sharedManager] player2];
 }
 
 #pragma mark - UIScreenNotifications
