@@ -34,13 +34,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.7</string>
+	<string>1.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>519</string>
+	<string>602</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LocalGitSha</key>
+	<string>37a9baf</string>
+	<key>MasterGitSha</key>
+	<string>a3e072b</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
