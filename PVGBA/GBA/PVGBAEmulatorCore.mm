@@ -70,7 +70,7 @@ static __weak PVGBAEmulatorCore *_current;
     }
 
     _current = self;
-
+    
     return self;
 }
 
@@ -276,6 +276,8 @@ const int GBAMap[] = {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_BUTTON_A, KEY_B
 bool systemReadJoypads()
 {
     __strong PVGBAEmulatorCore *strongCurrent = _current;
+    uint32_t aButtonVal = (strongCurrent.buttonsAreSwapped ? KEY_BUTTON_A : KEY_BUTTON_B);
+    uint32_t bButtonVal = (strongCurrent.buttonsAreSwapped ? KEY_BUTTON_B : KEY_BUTTON_A);
 
     for (NSInteger playerIndex = 0; playerIndex < 2; playerIndex++)
     {
@@ -302,8 +304,8 @@ bool systemReadJoypads()
                 (gamepad.dpad.left.isPressed || gamepad.leftThumbstick.left.isPressed) ? pad[playerIndex] |= KEY_LEFT : pad[playerIndex] &= ~KEY_LEFT;
                 (gamepad.dpad.right.isPressed || gamepad.leftThumbstick.right.isPressed) ? pad[playerIndex] |= KEY_RIGHT : pad[playerIndex] &= ~KEY_RIGHT;
 
-                gamepad.buttonA.isPressed ? pad[playerIndex] |= KEY_BUTTON_B : pad[playerIndex] &= ~KEY_BUTTON_B;
-                gamepad.buttonB.isPressed ? pad[playerIndex] |= KEY_BUTTON_A : pad[playerIndex] &= ~KEY_BUTTON_A;
+                gamepad.buttonA.isPressed ? pad[playerIndex] |= aButtonVal : pad[playerIndex] &= ~aButtonVal;
+                gamepad.buttonB.isPressed ? pad[playerIndex] |= bButtonVal : pad[playerIndex] &= ~bButtonVal;
 
                 gamepad.leftShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_L : pad[playerIndex] &= ~KEY_BUTTON_L;
                 gamepad.rightShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_R : pad[playerIndex] &= ~KEY_BUTTON_R;
@@ -321,8 +323,8 @@ bool systemReadJoypads()
                 gamepad.dpad.left.isPressed ? pad[playerIndex] |= KEY_LEFT : pad[playerIndex] &= ~KEY_LEFT;
                 gamepad.dpad.right.isPressed ? pad[playerIndex] |= KEY_RIGHT : pad[playerIndex] &= ~KEY_RIGHT;
 
-                gamepad.buttonA.isPressed ? pad[playerIndex] |= KEY_BUTTON_B : pad[playerIndex] &= ~KEY_BUTTON_B;
-                gamepad.buttonB.isPressed ? pad[playerIndex] |= KEY_BUTTON_A : pad[playerIndex] &= ~KEY_BUTTON_A;
+                gamepad.buttonA.isPressed ? pad[playerIndex] |= aButtonVal : pad[playerIndex] &= ~aButtonVal;
+                gamepad.buttonB.isPressed ? pad[playerIndex] |= bButtonVal : pad[playerIndex] &= ~bButtonVal;
 
                 gamepad.leftShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_L : pad[playerIndex] &= ~KEY_BUTTON_L;
                 gamepad.rightShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_R : pad[playerIndex] &= ~KEY_BUTTON_R;

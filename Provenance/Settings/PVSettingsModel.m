@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 James Addyman. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "PVSettingsModel.h"
 
 NSString * const kAutoSaveKey = @"kAutoSaveKey";
@@ -20,6 +21,7 @@ NSString * const kICadeControllerSettingKey = @"kiCadeControllerSettingKey";
 NSString * const kVolumeSettingKey = @"kVolumeSettingKey";
 NSString * const kFPSCountKey = @"kFPSCountKey";
 NSString * const kShowGameTitlesKey = @"kShowGameTitlesKey";
+NSString * const kSwapABButtonsKey = @"kSwapABButtonsKey";
 
 @implementation PVSettingsModel
 
@@ -52,7 +54,8 @@ NSString * const kShowGameTitlesKey = @"kShowGameTitlesKey";
                                                                   kICadeControllerSettingKey : @(kICadeControllerSettingDisabled),
                                                                   kVolumeSettingKey : @(1.0),
 																  kFPSCountKey : @(NO),
-                                                                  kShowGameTitlesKey: @(YES)}];
+                                                                  kShowGameTitlesKey: @(YES),
+                                                                  kSwapABButtonsKey: @(NO)}];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 
 		_autoSave = [[NSUserDefaults standardUserDefaults] boolForKey:kAutoSaveKey];
@@ -66,6 +69,7 @@ NSString * const kShowGameTitlesKey = @"kShowGameTitlesKey";
         _volume = [[NSUserDefaults standardUserDefaults] floatForKey:kVolumeSettingKey];
         _showFPSCount = [[NSUserDefaults standardUserDefaults] boolForKey:kFPSCountKey];
         _showGameTitles = [[NSUserDefaults standardUserDefaults] boolForKey:kShowGameTitlesKey];
+        _swapABButtons = [[NSUserDefaults standardUserDefaults] boolForKey:kSwapABButtonsKey];
 	}
 
 	return self;
@@ -157,6 +161,12 @@ NSString * const kShowGameTitlesKey = @"kShowGameTitlesKey";
 {
     _volume = volume;
     [[NSUserDefaults standardUserDefaults] setFloat:volume forKey:kVolumeSettingKey];
+}
+
+- (void)setSwapABButtons:(BOOL)swapABButtons {
+    _swapABButtons = swapABButtons;
+    [[NSUserDefaults standardUserDefaults] setBool:_swapABButtons forKey:kSwapABButtonsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

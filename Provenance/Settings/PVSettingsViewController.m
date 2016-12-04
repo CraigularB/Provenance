@@ -40,6 +40,7 @@
     [self.opacityValueLabel setText:[NSString stringWithFormat:@"%.0f%%", self.opacitySlider.value * 100]];
 	NSString *versionText = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 	versionText = [versionText stringByAppendingFormat:@" (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    [self.swapABSwitch setOn:[settings swapABButtons]];
 	[self.versionLabel setText:versionText];
 #if DEBUG
     [self.modeLabel setText:@"DEBUG"];
@@ -129,6 +130,11 @@
 {
     [[PVSettingsModel sharedInstance] setVolume:self.volumeSlider.value];
     [self.volumeValueLabel setText:[NSString stringWithFormat:@"%.0f%%", self.volumeSlider.value * 100]];
+}
+
+- (IBAction)toggleABButtonSwap:(id)sender
+{
+    [[PVSettingsModel sharedInstance] setSwapABButtons:[self.swapABSwitch isOn]];
 }
 
 

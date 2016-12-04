@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, PVEmulatorCoreErrorCode) {
 
     BOOL isRunning;
     BOOL shouldStop;
+    BOOL swapAB;
 }
 
 @property (nonatomic, copy) NSString *romName;
@@ -69,6 +70,8 @@ typedef NS_ENUM(NSInteger, GameSpeed) {
 - (void)executeFrame;
 - (BOOL)loadFileAtPath:(NSString*)path;
 - (void)updateControllers;
+- (void)setButtonsAreSwapped:(BOOL)flag;
+- (BOOL)buttonsAreSwapped;
 
 - (BOOL)supportsDiskSwapping;
 - (void)swapDisk;

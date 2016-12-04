@@ -21,6 +21,7 @@ extern NSString * const kiCadeControllerSettingKey;
 extern NSString * const kVolumeSettingKey;
 extern NSString * const kFPSCountKey;
 extern NSString * const kShowGameTitlesKey;
+extern NSString * const kSwapABButtonsKey;
 
 @interface PVSettingsModel : NSObject
 
@@ -34,6 +35,7 @@ extern NSString * const kShowGameTitlesKey;
 @property (nonatomic, assign) BOOL showFPSCount;
 @property (nonatomic, assign) BOOL showGameTitles;
 @property (nonatomic, assign) kICadeControllerSetting iCadeControllerSetting;
+@property (nonatomic, assign) BOOL swapABButtons;
 
 @property (nonatomic, assign) CGFloat controllerOpacity;
 @property (nonatomic, assign) float volume;

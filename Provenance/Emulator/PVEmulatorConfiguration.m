@@ -8,6 +8,7 @@
 
 #import "PVEmulatorConfiguration.h"
 #import "PVEmulatorConstants.h"
+#import "PVSettingsModel.h"
 
 #import <PVGenesis/PVGenesisEmulatorCore.h>
 #import "PVGenesisControllerViewController.h"
@@ -90,6 +91,7 @@
     else if ([systemID isEqualToString:PVGBASystemIdentifier])
     {
         core = [[PVGBAEmulatorCore alloc] init];
+        [core setButtonsAreSwapped:[[PVSettingsModel sharedInstance] swapABButtons]];
     }
     else if ([systemID isEqualToString:PVGBSystemIdentifier] ||
              [systemID isEqualToString:PVGBCSystemIdentifier])

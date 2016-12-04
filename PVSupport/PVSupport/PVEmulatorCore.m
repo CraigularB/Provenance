@@ -106,6 +106,16 @@ NSString *const PVEmulatorCoreErrorDomain = @"com.jamsoftonline.EmulatorCore.Err
     //subclasses may implement for polling
 }
 
+- (void)setButtonsAreSwapped:(BOOL)flag
+{
+    swapAB = flag;
+}
+
+- (BOOL)buttonsAreSwapped
+{
+    return swapAB;
+}
+
 - (void)frameRefreshThread:(id)anArgument
 {
     gameInterval = 1.0 / ([self frameInterval] * _framerateMultiplier);
