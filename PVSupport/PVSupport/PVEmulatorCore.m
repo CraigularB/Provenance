@@ -118,6 +118,8 @@ NSString *const PVEmulatorCoreErrorDomain = @"com.jamsoftonline.EmulatorCore.Err
 
 - (void)frameRefreshThread:(id)anArgument
 {
+    int frameCount = 0;
+    NSDate *fpsCounter = [NSDate date];
     gameInterval = 1.0 / ([self frameInterval] * _framerateMultiplier);
     NSTimeInterval gameTime = OEMonotonicTime();
     OESetThreadRealtime(gameInterval, 0.007, 0.03); // guessed from bsnes
@@ -147,6 +149,7 @@ NSString *const PVEmulatorCoreErrorDomain = @"com.jamsoftonline.EmulatorCore.Err
                         [self executeFrame];
                     }
                 }
+                frameCount += 1;
             }
         }
         
@@ -155,11 +158,19 @@ NSString *const PVEmulatorCoreErrorDomain = @"com.jamsoftonline.EmulatorCore.Err
         if (gameTime >= currentMonotonicTime) {
             OEWaitUntil(gameTime);
         }
-        
+
         // Service the event loop
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, 0);
         
         [self updateControllers];
+
+        // Compute FPS
+        NSTimeInterval timeSinceLastFPS = GetSecondsSince(fpsCounter);
+        if (timeSinceLastFPS >= 0.5) {
+            self.emulationFPS = (double)frameCount / timeSinceLastFPS;
+            frameCount = 0;
+            fpsCounter = [NSDate date];
+        }
     }
 }
 
