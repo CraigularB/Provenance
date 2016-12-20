@@ -27,7 +27,6 @@
 
 #import "PVSNESEmulatorCore.h"
 #import <PVSupport/OERingBuffer.h>
-#import <PVSupport/OETimingUtils.h>
 #import <PVSupport/PVGameControllerUtilities.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES3/gl.h>
@@ -139,6 +138,8 @@ NSString *SNESEmulatorKeys[] = { @"Up", @"Down", @"Left", @"Right", @"A", @"B", 
     NSString *extensionlessFilename = [[path lastPathComponent] stringByDeletingPathExtension];
 	
     NSString *batterySavesDirectory = [self batterySavesPath];
+    
+    [super stopEmulation];
 	
     if([batterySavesDirectory length] != 0)
     {
@@ -152,7 +153,6 @@ NSString *SNESEmulatorKeys[] = { @"Up", @"Down", @"Left", @"Right", @"A", @"B", 
         Memory.SaveSRAM([filePath UTF8String]);
     }
 	
-    [super stopEmulation];
 }
 
 - (void)executeFrame
