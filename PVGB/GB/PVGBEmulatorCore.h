@@ -44,5 +44,6 @@ typedef NS_ENUM(NSInteger, PVGBButton)
 
 - (oneway void)pushGBButton:(PVGBButton)button;
 - (oneway void)releaseGBButton:(PVGBButton)button;
+- (id)initWithButtonFlag:(BOOL)useRealButtons;
 
 @end

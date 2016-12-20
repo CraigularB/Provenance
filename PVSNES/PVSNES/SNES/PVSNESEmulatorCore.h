@@ -51,5 +51,5 @@ typedef NS_ENUM(NSUInteger, PVSNESButton)
 - (void)pushSNESButton:(PVSNESButton)button forPlayer:(NSInteger)player;
 - (void)releaseSNESButton:(PVSNESButton)button forPlayer:(NSInteger)player;
 - (void)flipBuffers;
-
+- (id)initWithButtonFlag:(BOOL)useRealButtons;
 @end

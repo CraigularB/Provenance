@@ -61,6 +61,11 @@ static __weak PVSNESEmulatorCore *_current;
     unsigned char *videoBuffer;
     unsigned char *videoBufferA;
     unsigned char *videoBufferB;
+    
+    uint16_t buttonA;
+    uint16_t buttonB;
+    uint16_t buttonX;
+    uint16_t buttonY;
 }
 
 @end
@@ -87,6 +92,27 @@ NSString *SNESEmulatorKeys[] = { @"Up", @"Down", @"Left", @"Right", @"A", @"B", 
 	}
 	
 	return self;
+}
+
+- (id)initWithButtonFlag:(BOOL)useRealButtons
+{
+    self = [self init];
+    
+    if (useRealButtons) {
+        self->buttonA = PVSNESButtonA;
+        self->buttonB = PVSNESButtonB;
+        self->buttonX = PVSNESButtonX;
+        self->buttonY = PVSNESButtonY;
+    }
+    else
+    {
+        self->buttonA = PVSNESButtonB;
+        self->buttonB = PVSNESButtonA;
+        self->buttonX = PVSNESButtonY;
+        self->buttonY = PVSNESButtonX;
+    }
+    
+    return self;
 }
 
 - (void)dealloc
@@ -385,6 +411,7 @@ static void FinalizeSamplesAudioCallback(void *)
 - (void)updateControllers
 {
     GCController *controller = nil;
+    
 
     for (NSInteger player = 1; player <= 2; player++)
     {
@@ -410,10 +437,10 @@ static void FinalizeSamplesAudioCallback(void *)
             BOOL rightPressed = dpad.right.pressed || axisDirection == PVControllerAxisDirectionRight || axisDirection == PVControllerAxisDirectionUpRight || axisDirection == PVControllerAxisDirectionDownRight;
             S9xReportButton(playerMask | PVSNESButtonRight, rightPressed);
 
-            S9xReportButton(playerMask | PVSNESButtonB, pad.buttonA.pressed);
-            S9xReportButton(playerMask | PVSNESButtonA, pad.buttonB.pressed);
-            S9xReportButton(playerMask | PVSNESButtonY, pad.buttonX.pressed);
-            S9xReportButton(playerMask | PVSNESButtonX, pad.buttonY.pressed);
+            S9xReportButton(playerMask | self->buttonA, pad.buttonA.pressed);
+            S9xReportButton(playerMask | self->buttonB, pad.buttonB.pressed);
+            S9xReportButton(playerMask | self->buttonX, pad.buttonX.pressed);
+            S9xReportButton(playerMask | self->buttonY, pad.buttonY.pressed);
 
             S9xReportButton(playerMask | PVSNESButtonTriggerLeft, pad.leftShoulder.pressed);
             S9xReportButton(playerMask | PVSNESButtonTriggerRight, pad.rightShoulder.pressed);
@@ -432,10 +459,10 @@ static void FinalizeSamplesAudioCallback(void *)
             S9xReportButton(playerMask | PVSNESButtonLeft, dpad.left.pressed);
             S9xReportButton(playerMask | PVSNESButtonRight, dpad.right.pressed);
 
-            S9xReportButton(playerMask | PVSNESButtonB, pad.buttonA.pressed);
-            S9xReportButton(playerMask | PVSNESButtonA, pad.buttonB.pressed);
-            S9xReportButton(playerMask | PVSNESButtonY, pad.buttonX.pressed);
-            S9xReportButton(playerMask | PVSNESButtonX, pad.buttonY.pressed);
+            S9xReportButton(playerMask | self->buttonA, pad.buttonA.pressed);
+            S9xReportButton(playerMask | self->buttonB, pad.buttonB.pressed);
+            S9xReportButton(playerMask | self->buttonX, pad.buttonX.pressed);
+            S9xReportButton(playerMask | self->buttonY, pad.buttonY.pressed);
 
             S9xReportButton(playerMask | PVSNESButtonTriggerLeft, pad.leftShoulder.pressed);
             S9xReportButton(playerMask | PVSNESButtonTriggerRight, pad.rightShoulder.pressed);

@@ -46,6 +46,9 @@ uint32_t gb_pad[PVGBButtonCount];
     int16_t *outSoundBuffer;
     double sampleRate;
     int displayMode;
+    
+    uint16_t buttonA;
+    uint16_t buttonB;
 }
 - (void)outputAudio:(unsigned)frames;
 - (void)applyCheat:(NSString *)code;
@@ -84,6 +87,23 @@ public:
 	_current = self;
 
 	return self;
+}
+
+- (id)initWithButtonFlag:(BOOL)useRealButtons
+{
+    self = [self init];
+    
+    if (useRealButtons) {
+        self->buttonA = GBMap[PVGBButtonA];
+        self->buttonB = GBMap[PVGBButtonB];
+    }
+    else
+    {
+        self->buttonA = GBMap[PVGBButtonB];
+        self->buttonB = GBMap[PVGBButtonA];
+    }
+    
+    return self;
 }
 
 - (void)dealloc
@@ -250,6 +270,7 @@ const int GBMap[] = {gambatte::InputGetter::UP, gambatte::InputGetter::DOWN, gam
 
 - (void)updateControllers
 {
+    __strong PVGBEmulatorCore *strongCurrent = _current;
     if ([self.controller1 extendedGamepad])
     {
         GCExtendedGamepad *pad = [self.controller1 extendedGamepad];
@@ -260,8 +281,8 @@ const int GBMap[] = {gambatte::InputGetter::UP, gambatte::InputGetter::DOWN, gam
         (dpad.left.isPressed || pad.leftThumbstick.left.isPressed) ? gb_pad[0] |= GBMap[PVGBButtonLeft] : gb_pad[0] &= ~GBMap[PVGBButtonLeft];
         (dpad.right.isPressed || pad.leftThumbstick.right.isPressed) ? gb_pad[0] |= GBMap[PVGBButtonRight] : gb_pad[0] &= ~GBMap[PVGBButtonRight];
 
-        pad.buttonA.isPressed ? gb_pad[0] |= GBMap[PVGBButtonB] : gb_pad[0] &= ~GBMap[PVGBButtonB];
-        pad.buttonB.isPressed ? gb_pad[0] |= GBMap[PVGBButtonA] : gb_pad[0] &= ~GBMap[PVGBButtonA];
+        pad.buttonA.isPressed ? gb_pad[0] |= self->buttonA : gb_pad[0] &= ~self->buttonA;
+        pad.buttonB.isPressed ? gb_pad[0] |= self->buttonB : gb_pad[0] &= ~self->buttonB;
 
         (pad.buttonX.isPressed || pad.leftShoulder.isPressed || pad.leftTrigger.isPressed) ? gb_pad[0] |= GBMap[PVGBButtonStart] : gb_pad[0] &= ~GBMap[PVGBButtonStart];
         (pad.buttonY.isPressed || pad.rightShoulder.isPressed || pad.rightTrigger.isPressed) ? gb_pad[0] |= GBMap[PVGBButtonSelect] : gb_pad[0] &= ~GBMap[PVGBButtonSelect];
@@ -276,8 +297,8 @@ const int GBMap[] = {gambatte::InputGetter::UP, gambatte::InputGetter::DOWN, gam
         dpad.left.isPressed ? gb_pad[0] |= GBMap[PVGBButtonLeft] : gb_pad[0] &= ~GBMap[PVGBButtonLeft];
         dpad.right.isPressed ? gb_pad[0] |= GBMap[PVGBButtonRight] : gb_pad[0] &= ~GBMap[PVGBButtonRight];
 
-        pad.buttonA.isPressed ? gb_pad[0] |= GBMap[PVGBButtonB] : gb_pad[0] &= ~GBMap[PVGBButtonB];
-        pad.buttonB.isPressed ? gb_pad[0] |= GBMap[PVGBButtonA] : gb_pad[0] &= ~GBMap[PVGBButtonA];
+        pad.buttonA.isPressed ? gb_pad[0] |= self->buttonA : gb_pad[0] &= ~self->buttonA;
+        pad.buttonB.isPressed ? gb_pad[0] |= self->buttonB : gb_pad[0] &= ~self->buttonB;
 
         (pad.buttonX.isPressed || pad.leftShoulder.isPressed) ? gb_pad[0] |= GBMap[PVGBButtonStart] : gb_pad[0] &= ~GBMap[PVGBButtonStart];
         (pad.buttonY.isPressed || pad.rightShoulder.isPressed) ? gb_pad[0] |= GBMap[PVGBButtonSelect] : gb_pad[0] &= ~GBMap[PVGBButtonSelect];

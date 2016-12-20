@@ -47,6 +47,9 @@ static uint32_t palette[256];
     int32_t *soundBuffer;
     int32_t soundSize;
     uint32_t pad[2][PVNESButtonCount];
+    
+    uint16_t buttonA;
+    uint16_t buttonB;
 }
 
 @end
@@ -65,6 +68,23 @@ static __weak PVNESEmulatorCore *_current;
 	_current = self;
 
 	return self;
+}
+
+- (id)initWithButtonFlag:(BOOL)useRealButtons
+{
+    self = [self init];
+    
+    if (useRealButtons) {
+        self->buttonA = NESMap[PVNESButtonA];
+        self->buttonB = NESMap[PVNESButtonB];
+    }
+    else
+    {
+        self->buttonA = NESMap[PVNESButtonB];
+        self->buttonB = NESMap[PVNESButtonA];
+    }
+    
+    return self;
 }
 
 - (void)dealloc

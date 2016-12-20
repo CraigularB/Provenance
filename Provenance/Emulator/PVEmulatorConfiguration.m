@@ -74,6 +74,7 @@
 
 - (PVEmulatorCore *)emulatorCoreForSystemIdentifier:(NSString *)systemID
 {
+    BOOL useRealButtons = [[PVSettingsModel sharedInstance] swapABButtons];
 	PVEmulatorCore *core = nil;
 	
 	if ([systemID isEqualToString:PVGenesisSystemIdentifier] ||
@@ -86,22 +87,21 @@
 	}
 	else if ([systemID isEqualToString:PVSNESSystemIdentifier])
 	{
-		core = [[PVSNESEmulatorCore alloc] init];
+        core = [[PVSNESEmulatorCore alloc] initWithButtonFlag:useRealButtons];
 	}
     else if ([systemID isEqualToString:PVGBASystemIdentifier])
     {
-        core = [[PVGBAEmulatorCore alloc] init];
-        [core setButtonsAreSwapped:[[PVSettingsModel sharedInstance] swapABButtons]];
+        core = [[PVGBAEmulatorCore alloc] initWithButtonFlag:useRealButtons];
     }
     else if ([systemID isEqualToString:PVGBSystemIdentifier] ||
              [systemID isEqualToString:PVGBCSystemIdentifier])
     {
-        core = [[PVGBEmulatorCore alloc] init];
+        core = [[PVGBEmulatorCore alloc] initWithButtonFlag:useRealButtons];
     }
     else if ([systemID isEqualToString:PVNESSystemIdentifier] ||
              [systemID isEqualToString:PVFDSSystemIdentifier])
     {
-        core = [[PVNESEmulatorCore alloc] init];
+        core = [[PVNESEmulatorCore alloc] initWithButtonFlag:useRealButtons];
     }
     else if ([systemID isEqualToString:PV2600SystemIdentifier])
     {

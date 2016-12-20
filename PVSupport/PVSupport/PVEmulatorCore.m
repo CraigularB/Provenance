@@ -42,6 +42,12 @@ NSString *const PVEmulatorCoreErrorDomain = @"com.jamsoftonline.EmulatorCore.Err
 	return self;
 }
 
+/*- (id)initWithButtonFlag:(BOOL)useRealButtons
+{
+    self = [self init];
+    return self;
+}*/
+
 - (void)dealloc
 {
     [self stopEmulation];
@@ -104,16 +110,6 @@ NSString *const PVEmulatorCoreErrorDomain = @"com.jamsoftonline.EmulatorCore.Err
 - (void)updateControllers
 {
     //subclasses may implement for polling
-}
-
-- (void)setButtonsAreSwapped:(BOOL)flag
-{
-    swapAB = flag;
-}
-
-- (BOOL)buttonsAreSwapped
-{
-    return swapAB;
 }
 
 - (void)frameRefreshThread:(id)anArgument

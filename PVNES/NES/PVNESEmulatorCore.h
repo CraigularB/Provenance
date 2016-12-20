@@ -44,5 +44,6 @@ typedef NS_ENUM(NSInteger, PVNESButton)
 
 - (oneway void)pushNESButton:(PVNESButton)button forPlayer:(NSInteger)player;
 - (oneway void)releaseNESButton:(PVNESButton)button forPlayer:(NSInteger)player;
+- (id)initWithButtonFlag:(BOOL)useRealButtons;
 
 @end

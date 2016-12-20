@@ -51,7 +51,11 @@ uint32_t pad[PVGBAButtonCount];
     NSString *_romID;
     BOOL _enableRTC, _enableMirroring, _useBIOS, _haveFrame, _migratingSave;
     int _flashSize, _cpuSaveType;
+    
+    uint16_t buttonA;
+    uint16_t buttonB;
 }
+
 - (void)loadOverrides:(NSString *)gameID;
 - (void)writeSaveFile;
 - (void)migrateSaveFile;
@@ -70,6 +74,23 @@ static __weak PVGBAEmulatorCore *_current;
     }
 
     _current = self;
+    
+    return self;
+}
+
+- (id)initWithButtonFlag:(BOOL)useRealButtons
+{
+    self = [self init];
+    
+    if (useRealButtons) {
+        self->buttonA = KEY_BUTTON_A;
+        self->buttonB = KEY_BUTTON_B;
+    }
+    else
+    {
+        self->buttonA = KEY_BUTTON_B;
+        self->buttonB = KEY_BUTTON_A;
+    }
     
     return self;
 }
@@ -276,8 +297,8 @@ const int GBAMap[] = {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_BUTTON_A, KEY_B
 bool systemReadJoypads()
 {
     __strong PVGBAEmulatorCore *strongCurrent = _current;
-    uint32_t aButtonVal = (strongCurrent.buttonsAreSwapped ? KEY_BUTTON_A : KEY_BUTTON_B);
-    uint32_t bButtonVal = (strongCurrent.buttonsAreSwapped ? KEY_BUTTON_B : KEY_BUTTON_A);
+    uint16_t localA = strongCurrent->buttonA;
+    uint16_t localB = strongCurrent->buttonB;
 
     for (NSInteger playerIndex = 0; playerIndex < 2; playerIndex++)
     {
@@ -304,8 +325,8 @@ bool systemReadJoypads()
                 (gamepad.dpad.left.isPressed || gamepad.leftThumbstick.left.isPressed) ? pad[playerIndex] |= KEY_LEFT : pad[playerIndex] &= ~KEY_LEFT;
                 (gamepad.dpad.right.isPressed || gamepad.leftThumbstick.right.isPressed) ? pad[playerIndex] |= KEY_RIGHT : pad[playerIndex] &= ~KEY_RIGHT;
 
-                gamepad.buttonA.isPressed ? pad[playerIndex] |= aButtonVal : pad[playerIndex] &= ~aButtonVal;
-                gamepad.buttonB.isPressed ? pad[playerIndex] |= bButtonVal : pad[playerIndex] &= ~bButtonVal;
+                gamepad.buttonA.isPressed ? pad[playerIndex] |= localA : pad[playerIndex] &= ~localA;
+                gamepad.buttonB.isPressed ? pad[playerIndex] |= localB : pad[playerIndex] &= ~localB;
 
                 gamepad.leftShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_L : pad[playerIndex] &= ~KEY_BUTTON_L;
                 gamepad.rightShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_R : pad[playerIndex] &= ~KEY_BUTTON_R;
@@ -323,8 +344,8 @@ bool systemReadJoypads()
                 gamepad.dpad.left.isPressed ? pad[playerIndex] |= KEY_LEFT : pad[playerIndex] &= ~KEY_LEFT;
                 gamepad.dpad.right.isPressed ? pad[playerIndex] |= KEY_RIGHT : pad[playerIndex] &= ~KEY_RIGHT;
 
-                gamepad.buttonA.isPressed ? pad[playerIndex] |= aButtonVal : pad[playerIndex] &= ~aButtonVal;
-                gamepad.buttonB.isPressed ? pad[playerIndex] |= bButtonVal : pad[playerIndex] &= ~bButtonVal;
+                gamepad.buttonA.isPressed ? pad[playerIndex] |= localA : pad[playerIndex] &= ~localA;
+                gamepad.buttonB.isPressed ? pad[playerIndex] |= localB : pad[playerIndex] &= ~localB;
 
                 gamepad.leftShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_L : pad[playerIndex] &= ~KEY_BUTTON_L;
                 gamepad.rightShoulder.isPressed ? pad[playerIndex] |= KEY_BUTTON_R : pad[playerIndex] &= ~KEY_BUTTON_R;
