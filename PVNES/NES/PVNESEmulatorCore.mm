@@ -46,9 +46,7 @@ static uint32_t palette[256];
     int32_t *soundBuffer;
     int32_t soundSize;
     uint32_t pad[2][PVNESButtonCount];
-    
-    uint16_t buttonA;
-    uint16_t buttonB;
+    BOOL swapButtons;
 }
 
 @end
@@ -74,13 +72,11 @@ static __weak PVNESEmulatorCore *_current;
     self = [self init];
     
     if (useRealButtons) {
-        self->buttonA = NESMap[PVNESButtonA];
-        self->buttonB = NESMap[PVNESButtonB];
+        self->swapButtons = true;
     }
     else
     {
-        self->buttonA = NESMap[PVNESButtonB];
-        self->buttonB = NESMap[PVNESButtonA];
+        self->swapButtons = false;
     }
     
     return self;
@@ -328,9 +324,16 @@ const int NESMap[] = {JOY_UP, JOY_DOWN, JOY_LEFT, JOY_RIGHT, JOY_A, JOY_B, JOY_S
             (dpad.down.isPressed || gamepad.leftThumbstick.down.isPressed) ? pad[playerIndex][0] |= JOY_DOWN << playerShift : pad[playerIndex][0] &= ~JOY_DOWN << playerShift;
             (dpad.left.isPressed || gamepad.leftThumbstick.left.isPressed) ? pad[playerIndex][0] |= JOY_LEFT << playerShift : pad[playerIndex][0] &= ~JOY_LEFT << playerShift;
             (dpad.right.isPressed || gamepad.leftThumbstick.right.isPressed) ? pad[playerIndex][0] |= JOY_RIGHT << playerShift : pad[playerIndex][0] &= ~JOY_RIGHT << playerShift;
-
-            (gamepad.buttonX.isPressed || gamepad.buttonY.isPressed) ? pad[playerIndex][0] |= JOY_B << playerShift : pad[playerIndex][0] &= ~JOY_B << playerShift;
-            (gamepad.buttonA.isPressed || gamepad.buttonB.isPressed) ? pad[playerIndex][0] |= JOY_A << playerShift : pad[playerIndex][0] &= ~JOY_A << playerShift;
+            
+            if (self->swapButtons) {
+                (gamepad.buttonB.isPressed || gamepad.buttonY.isPressed) ? pad[playerIndex][0] |= JOY_B << playerShift : pad[playerIndex][0] &= ~JOY_B << playerShift;
+                (gamepad.buttonA.isPressed || gamepad.buttonX.isPressed) ? pad[playerIndex][0] |= JOY_A << playerShift : pad[playerIndex][0] &= ~JOY_A << playerShift;
+            }
+            else
+            {
+                (gamepad.buttonX.isPressed || gamepad.buttonY.isPressed) ? pad[playerIndex][0] |= JOY_B << playerShift : pad[playerIndex][0] &= ~JOY_B << playerShift;
+                (gamepad.buttonA.isPressed || gamepad.buttonB.isPressed) ? pad[playerIndex][0] |= JOY_A << playerShift : pad[playerIndex][0] &= ~JOY_A << playerShift;
+            }
 
             (gamepad.leftShoulder.isPressed || gamepad.leftTrigger.isPressed) ? pad[playerIndex][0] |= JOY_START << playerShift : pad[playerIndex][0] &= ~JOY_START << playerShift;
             (gamepad.rightShoulder.isPressed || gamepad.rightTrigger.isPressed) ? pad[playerIndex][0] |= JOY_SELECT << playerShift : pad[playerIndex][0] &= ~JOY_SELECT << playerShift;
