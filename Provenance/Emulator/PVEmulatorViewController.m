@@ -209,7 +209,11 @@ void uncaughtExceptionHandler(NSException *exception)
         _fpsLabel.text = [NSNumber numberWithInteger:self.glViewController.framesPerSecond].stringValue;
         _fpsLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _fpsLabel.textAlignment = NSTextAlignmentRight;
+#if TARGET_OS_TV
+        _fpsLabel.font = [UIFont systemFontOfSize:100 weight:UIFontWeightBold];
+#else
         _fpsLabel.font = [UIFont systemFontOfSize:22 weight:UIFontWeightBold];
+#endif
         [self.glViewController.view addSubview:_fpsLabel];
         
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_fpsLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.glViewController.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:30]];
@@ -804,6 +808,20 @@ void uncaughtExceptionHandler(NSException *exception)
 }
 
 #pragma mark - Controllers
+
+#if TARGET_OS_TV
+// Ensure that override of menu gesture is caught and handled properly for tvOS
+-(void)pressesBegan:(NSSet<UIPress *> *)presses withEvent:(nullable UIPressesEvent *)event {
+    
+    UIPress *press = (UIPress *)presses.anyObject;
+    if ( press && press.type == UIPressTypeMenu && !self.isShowingMenu )
+    {
+        [self controllerPauseButtonPressed];
+    }
+    else
+        [super pressesBegan:presses withEvent:event];
+}
+#endif 
 
 - (void)controllerPauseButtonPressed
 {
