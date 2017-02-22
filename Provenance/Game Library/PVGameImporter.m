@@ -444,7 +444,6 @@
     
     if (![results count])
     {
-        NSString *fileExtension = [[game romPath] pathExtension];
         NSString *fileName = [[[game romPath] lastPathComponent] stringByDeletingPathExtension];
         
         // Remove any extraneous stuff in the rom name such as (U), (J), [T+Eng] etc
@@ -452,7 +451,7 @@
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             charSet = [NSMutableCharacterSet punctuationCharacterSet];
-            [charSet removeCharactersInString:@"-+&.'"];
+            [charSet removeCharactersInString:@"-+&.',"];
         });
         
         NSRange nonCharRange = [fileName rangeOfCharacterFromSet:charSet];
@@ -463,11 +462,19 @@
             gameTitleLen = [fileName length];
         }
         fileName = [fileName substringToIndex:gameTitleLen];
-        fileName = [[fileName stringByAppendingString:@"%."] stringByAppendingString:fileExtension];
         results = [self searchDatabaseUsingKey:@"romFileName"
                                          value:fileName
                                       systemID:[game systemIdentifier]
                                          error:&error];
+        
+        if (![results count])
+        {
+            fileName = [fileName stringByReplacingOccurrencesOfString:@" - " withString:@": "];
+            results = [self searchDatabaseUsingKey:@"romFileName"
+                                             value:fileName
+                                          systemID:[game systemIdentifier]
+                                             error:&error];
+        }
     }
     
     if (![results count])
