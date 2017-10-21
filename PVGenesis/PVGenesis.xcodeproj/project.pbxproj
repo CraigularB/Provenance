@@ -997,7 +997,7 @@
 					"-D__LIBRETRO__",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVGenesis;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVGenesis;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1042,7 +1042,7 @@
 					"-D__LIBRETRO__",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVGenesis;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVGenesis;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1087,7 +1087,7 @@
 					"-D__LIBRETRO__",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVGenesis;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVGenesis;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1130,7 +1130,7 @@
 					"-D__LIBRETRO__",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVGenesis;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVGenesis;
 				PRODUCT_NAME = PVGenesis;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -1176,7 +1176,7 @@
 					"-D__LIBRETRO__",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVGenesis;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVGenesis;
 				PRODUCT_NAME = PVGenesis;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -1222,7 +1222,7 @@
 					"-D__LIBRETRO__",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVGenesis;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVGenesis;
 				PRODUCT_NAME = PVGenesis;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;

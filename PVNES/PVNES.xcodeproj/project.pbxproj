@@ -2121,7 +2121,7 @@
 					"-DPSS_STYLE=1",
 					"-DLSB_FIRST",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVNES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVNES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2168,7 +2168,7 @@
 					"-DPSS_STYLE=1",
 					"-DLSB_FIRST",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVNES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVNES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2215,7 +2215,7 @@
 					"-DPSS_STYLE=1",
 					"-DLSB_FIRST",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVNES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVNES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2260,7 +2260,7 @@
 					"-DPSS_STYLE=1",
 					"-DLSB_FIRST",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVNES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVNES;
 				PRODUCT_NAME = PVNES;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2307,7 +2307,7 @@
 					"-DPSS_STYLE=1",
 					"-DLSB_FIRST",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVNES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVNES;
 				PRODUCT_NAME = PVNES;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2354,7 +2354,7 @@
 					"-DPSS_STYLE=1",
 					"-DLSB_FIRST",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamsoftonline.PVNES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmbelped.PVNES;
 				PRODUCT_NAME = PVNES;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
